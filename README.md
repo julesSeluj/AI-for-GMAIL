@@ -1,36 +1,64 @@
 # AI for Gmail
 
-Extension Chrome open source qui permet de rédiger des emails avec n'importe quel LLM, directement dans l'interface de Gmail.
+Open-source Chrome extension that lets you write emails with any AI LLM directly inside Gmail.
 
-## Fonctionnalités
+## Features
 
-- Bouton **AI Write** dans la barre d'outils de chaque fenêtre de rédaction Gmail
-- Prise en compte du fil de discussion ouvert pour rédiger une réponse pertinente
-- Choix du fournisseur : OpenAI, Anthropic (Claude), ou tout endpoint compatible OpenAI (Ollama, LM Studio, Mistral, OpenRouter…)
-- La clé API reste dans le stockage de l'extension ; les requêtes partent directement du navigateur vers le fournisseur choisi, sans serveur intermédiaire
+- **AI Write** button in every Gmail compose toolbar
+- Three actions: compose from scratch, reply to a thread, improve a draft
+- Streaming output — see the response as it generates
+- Seven built-in providers: OpenAI, Anthropic (Claude), Google Gemini, Mistral, OpenRouter, Ollama (local), plus any OpenAI-compatible endpoint
+- Tone (neutral, formal, friendly, direct) and length (short, medium, long) controls
+- Bilingual interface (English and French via `chrome.i18n`)
+- API keys stay in browser local storage — requests go directly from your browser to the provider, no backend server
 
-## Installation (mode développeur)
+## Installation (developer mode)
 
-1. Cloner le dépôt
-2. Ouvrir `chrome://extensions` et activer le **Mode développeur**
-3. Cliquer sur **Charger l'extension non empaquetée** et sélectionner le dossier `src/`
-4. Ouvrir les options de l'extension, choisir le fournisseur, le modèle et saisir la clé API
+1. Clone the repository
+2. Open `chrome://extensions` and enable **Developer mode**
+3. Click **Load unpacked** and select the `src/` folder
+4. Open the extension options and configure your provider, model, and API key
 
-## Structure
+## Provider setup
+
+| Provider | API key | Notes |
+|---|---|---|
+| OpenAI | Required | |
+| Anthropic | Required | |
+| Google Gemini | Required | Uses the OpenAI-compatible endpoint |
+| Mistral | Required | |
+| OpenRouter | Required | |
+| Ollama | None | Start with `OLLAMA_ORIGINS=chrome-extension://* ollama serve` |
+| Custom | Optional | Any OpenAI-compatible endpoint (LM Studio, vLLM, etc.) |
+
+## Running tests
+
+```bash
+npm test
+```
+
+Requires Node.js 20+. No dependencies to install — tests use `node:test`.
+
+## Project structure
 
 ```
 src/
-  manifest.json        Manifest V3
-  background/          Service worker : appels aux API LLM
-  content/             Script injecté dans Gmail (bouton + panneau)
-  popup/               Popup de l'icône d'extension
-  options/             Page de configuration
-  assets/icons/        Icônes
+  manifest.json             Manifest V3
+  _locales/                 English and French translations
+  lib/                      Shared modules (providers, storage, prompt, SSE, LLM adapters)
+  background/               Service worker — streaming LLM calls via port messaging
+  content/                  Gmail content scripts (DOM access, panel, button injection)
+  popup/                    Extension popup — provider status
+  options/                  Settings page — provider, model, API key, tone, length
+  assets/icons/             Placeholder icons
+tests/                      Unit tests (node:test)
+docs/                       Development plan, privacy policy, store submission notes
 ```
 
-## Feuille de route
+## Privacy
 
-- Publication sur le Chrome Web Store
-- Réponses en streaming
-- Choix du ton et de la longueur
-- Internationalisation de l'interface
+No backend, no telemetry, no data collection. Email content is sent only to the provider you choose, only when you click Generate. See [docs/PRIVACY.md](docs/PRIVACY.md).
+
+## License
+
+MIT — see [LICENSE](LICENSE).

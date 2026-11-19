@@ -19,5 +19,8 @@ venv/
 .DS_Store
 Thumbs.db
 
+# Build output
+dist/
+
 # Claude
 .claude/settings.local.json
