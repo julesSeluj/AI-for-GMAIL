@@ -2,78 +2,129 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AI for Gmail — Settings</title>
+  <title data-i18n="optTitle">AI for Gmail — Settings</title>
   <style>
     body {
-      max-width: 520px;
+      max-width: 560px;
       margin: 40px auto;
       padding: 0 24px;
-      font-family: "Google Sans", Roboto, sans-serif;
+      font-family: "Google Sans", Roboto, Arial, sans-serif;
       color: #202124;
+      font-size: 14px;
     }
     h1 { font-size: 22px; margin-bottom: 24px; }
-    label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; color: #5f6368; }
+    .field { margin-bottom: 16px; }
+    label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 4px; color: #5f6368; }
     select, input[type="text"], input[type="password"] {
       width: 100%;
-      padding: 10px 12px;
+      padding: 8px 10px;
       border: 1px solid #dadce0;
-      border-radius: 8px;
+      border-radius: 6px;
       font-size: 14px;
       box-sizing: border-box;
-      margin-bottom: 20px;
       outline: none;
     }
     select:focus, input:focus { border-color: #1a73e8; }
-    .custom-endpoint { display: none; }
-    .custom-endpoint.visible { display: block; }
+    .row { display: flex; gap: 8px; align-items: center; }
+    .row input { flex: 1; }
     button {
-      padding: 10px 28px;
+      padding: 8px 20px;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
       background: #1a73e8;
       color: #fff;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
       cursor: pointer;
     }
     button:hover { background: #1557b0; }
-    .saved {
-      display: inline-block;
-      margin-left: 12px;
-      color: #34a853;
-      font-size: 13px;
-      opacity: 0;
-      transition: opacity 0.3s;
+    .btn-secondary {
+      background: #fff;
+      color: #1a73e8;
+      border: 1px solid #dadce0;
     }
-    .saved.show { opacity: 1; }
-    .models { font-size: 12px; color: #80868b; margin: -16px 0 20px; }
+    .btn-secondary:hover { background: #f1f3f4; }
+    .status {
+      margin-top: 10px;
+      font-size: 13px;
+      min-height: 20px;
+    }
+    .status.ok { color: #34a853; }
+    .status.err { color: #d93025; }
+    .help {
+      margin-top: 4px;
+      font-size: 12px;
+      color: #5f6368;
+      background: #f8f9fa;
+      padding: 6px 8px;
+      border-radius: 4px;
+    }
+    hr { border: none; border-top: 1px solid #e8eaed; margin: 20px 0; }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
-  <h1>AI for Gmail — Settings</h1>
+  <h1 data-i18n="optTitle">AI for Gmail — Settings</h1>
 
-  <label for="provider">LLM Provider</label>
-  <select id="provider">
-    <option value="openai">OpenAI (GPT-4o, GPT-4, …)</option>
-    <option value="anthropic">Anthropic (Claude)</option>
-    <option value="custom">Custom OpenAI-compatible endpoint</option>
-  </select>
-
-  <label for="model">Model</label>
-  <input type="text" id="model" placeholder="e.g. gpt-4o, claude-sonnet-5-5">
-  <div class="models" id="modelHint"></div>
-
-  <label for="apiKey">API Key</label>
-  <input type="password" id="apiKey" placeholder="sk-…">
-
-  <div class="custom-endpoint" id="customEndpointBlock">
-    <label for="customEndpoint">Endpoint URL</label>
-    <input type="text" id="customEndpoint" placeholder="https://your-server.com/v1/chat/completions">
+  <div class="field">
+    <label data-i18n="optProvider">Provider</label>
+    <select id="provider"></select>
   </div>
 
-  <button id="save">Save</button>
-  <span class="saved" id="saved">Saved!</span>
+  <div class="field" id="keyField">
+    <label data-i18n="optApiKey">API key</label>
+    <div class="row">
+      <input type="password" id="apiKey" data-i18n-placeholder="optApiKeyPlaceholder">
+      <button type="button" class="btn-secondary" id="toggleKey" data-i18n="optShowKey">Show</button>
+    </div>
+  </div>
 
-  <script src="options.js"></script>
+  <div class="field">
+    <label data-i18n="optModel">Model</label>
+    <div class="row">
+      <input type="text" id="model" list="modelList" data-i18n-placeholder="optModelPlaceholder">
+      <datalist id="modelList"></datalist>
+      <button type="button" class="btn-secondary" id="loadModels" data-i18n="optLoadModels">Load models</button>
+    </div>
+  </div>
+
+  <div class="field hidden" id="customUrlField">
+    <label data-i18n="optCustomUrl">Endpoint URL</label>
+    <input type="text" id="customUrl" data-i18n-placeholder="optCustomUrlPlaceholder">
+  </div>
+
+  <div class="field hidden" id="ollamaHelp">
+    <div class="help" data-i18n="optOllamaHelp"></div>
+  </div>
+
+  <hr>
+
+  <div class="field">
+    <label data-i18n="optDefaultTone">Default tone</label>
+    <select id="tone">
+      <option value="neutral" data-i18n="toneNeutral">Neutral</option>
+      <option value="formal" data-i18n="toneFormal">Formal</option>
+      <option value="friendly" data-i18n="toneFriendly">Friendly</option>
+      <option value="direct" data-i18n="toneDirect">Direct</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label data-i18n="optDefaultLength">Default length</label>
+    <select id="length">
+      <option value="short" data-i18n="lengthShort">Short</option>
+      <option value="medium" data-i18n="lengthMedium">Medium</option>
+      <option value="long" data-i18n="lengthLong">Long</option>
+    </select>
+  </div>
+
+  <div class="row" style="margin-top:16px">
+    <button id="save" data-i18n="optSave">Save</button>
+    <button type="button" class="btn-secondary" id="testBtn" data-i18n="optTestConnection">Test connection</button>
+  </div>
+
+  <div class="status" id="status"></div>
+
+  <script type="module" src="options.js"></script>
 </body>
 </html>
