@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI for Gmail — Settings</title>
+  <style>
+    body {
+      max-width: 520px;
+      margin: 40px auto;
+      padding: 0 24px;
+      font-family: "Google Sans", Roboto, sans-serif;
+      color: #202124;
+    }
+    h1 { font-size: 22px; margin-bottom: 24px; }
+    label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; color: #5f6368; }
+    select, input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #dadce0;
+      border-radius: 8px;
+      font-size: 14px;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+      outline: none;
+    }
+    select:focus, input:focus { border-color: #1a73e8; }
+    .custom-endpoint { display: none; }
+    .custom-endpoint.visible { display: block; }
+    button {
+      padding: 10px 28px;
+      border: none;
+      border-radius: 8px;
+      background: #1a73e8;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    button:hover { background: #1557b0; }
+    .saved {
+      display: inline-block;
+      margin-left: 12px;
+      color: #34a853;
+      font-size: 13px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .saved.show { opacity: 1; }
+    .models { font-size: 12px; color: #80868b; margin: -16px 0 20px; }
+  </style>
+</head>
+<body>
+  <h1>AI for Gmail — Settings</h1>
+
+  <label for="provider">LLM Provider</label>
+  <select id="provider">
+    <option value="openai">OpenAI (GPT-4o, GPT-4, …)</option>
+    <option value="anthropic">Anthropic (Claude)</option>
+    <option value="custom">Custom OpenAI-compatible endpoint</option>
+  </select>
+
+  <label for="model">Model</label>
+  <input type="text" id="model" placeholder="e.g. gpt-4o, claude-sonnet-5-5">
+  <div class="models" id="modelHint"></div>
+
+  <label for="apiKey">API Key</label>
+  <input type="password" id="apiKey" placeholder="sk-…">
+
+  <div class="custom-endpoint" id="customEndpointBlock">
+    <label for="customEndpoint">Endpoint URL</label>
+    <input type="text" id="customEndpoint" placeholder="https://your-server.com/v1/chat/completions">
+  </div>
+
+  <button id="save">Save</button>
+  <span class="saved" id="saved">Saved!</span>
+
+  <script src="options.js"></script>
+</body>
+</html>

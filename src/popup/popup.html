@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 300px;
+      padding: 20px;
+      font-family: "Google Sans", Roboto, sans-serif;
+      margin: 0;
+    }
+    h2 { margin: 0 0 8px; font-size: 16px; color: #202124; }
+    p { font-size: 13px; color: #5f6368; margin: 0 0 16px; line-height: 1.5; }
+    .status { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; }
+    .dot.ok { background: #34a853; }
+    .dot.err { background: #ea4335; }
+    .status-text { font-size: 13px; color: #202124; }
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #1a73e8;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    button:hover { background: #1557b0; }
+  </style>
+</head>
+<body>
+  <h2>AI for Gmail</h2>
+  <p>Write emails with any AI, right inside Gmail.</p>
+  <div class="status">
+    <div class="dot" id="statusDot"></div>
+    <span class="status-text" id="statusText"></span>
+  </div>
+  <button id="optionsBtn">Settings</button>
+  <script src="popup.js"></script>
+</body>
+</html>
