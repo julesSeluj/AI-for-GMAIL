@@ -4,23 +4,26 @@
   <meta charset="UTF-8">
   <style>
     body {
-      width: 300px;
-      padding: 20px;
-      font-family: "Google Sans", Roboto, sans-serif;
+      width: 280px;
+      padding: 16px;
+      font-family: "Google Sans", Roboto, Arial, sans-serif;
       margin: 0;
+      color: #202124;
+      font-size: 13px;
     }
-    h2 { margin: 0 0 8px; font-size: 16px; color: #202124; }
-    p { font-size: 13px; color: #5f6368; margin: 0 0 16px; line-height: 1.5; }
-    .status { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
-    .dot { width: 8px; height: 8px; border-radius: 50%; }
+    h2 { margin: 0 0 12px; font-size: 15px; }
+    .row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .label { color: #5f6368; }
+    .value { font-weight: 500; }
+    .status { display: flex; align-items: center; gap: 8px; margin: 12px 0; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
     .dot.ok { background: #34a853; }
-    .dot.err { background: #ea4335; }
-    .status-text { font-size: 13px; color: #202124; }
+    .dot.warn { background: #ea4335; }
     button {
       width: 100%;
-      padding: 10px;
+      padding: 8px;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
       background: #1a73e8;
       color: #fff;
       font-size: 13px;
@@ -31,13 +34,20 @@
   </style>
 </head>
 <body>
-  <h2>AI for Gmail</h2>
-  <p>Write emails with any AI, right inside Gmail.</p>
+  <h2 data-i18n="panelTitle">AI for Gmail</h2>
+  <div class="row">
+    <span class="label" data-i18n="popupProvider">Provider</span>
+    <span class="value" id="providerName">—</span>
+  </div>
+  <div class="row">
+    <span class="label" data-i18n="popupModel">Model</span>
+    <span class="value" id="modelName">—</span>
+  </div>
   <div class="status">
     <div class="dot" id="statusDot"></div>
-    <span class="status-text" id="statusText"></span>
+    <span id="statusText"></span>
   </div>
-  <button id="optionsBtn">Settings</button>
-  <script src="popup.js"></script>
+  <button id="optionsBtn" data-i18n="popupOpenSettings">Settings</button>
+  <script type="module" src="popup.js"></script>
 </body>
 </html>
