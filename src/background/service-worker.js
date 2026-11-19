@@ -1,98 +1,72 @@
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.get("llmProvider", (data) => {
-    if (!data.llmProvider) {
-      chrome.storage.sync.set({ llmProvider: "openai", llmModel: "gpt-4o" });
+import { getProvider, resolveBaseUrl, originPattern } from "../lib/providers.js";
+import { getSettings, getApiKey } from "../lib/storage.js";
+import { buildMessages } from "../lib/prompt.js";
+import { streamCompletion } from "../lib/llm.js";
+
+chrome.runtime.onConnect.addListener((port) => {
+  if (port.name !== "ai4g-generate") return;
+
+  let abortController = null;
+
+  port.onMessage.addListener(async (msg) => {
+    if (msg.type !== "start") return;
+
+    abortController = new AbortController();
+
+    try {
+      const settings = await getSettings();
+      const provider = getProvider(settings.provider);
+      if (!provider) {
+        port.postMessage({ type: "error", code: "provider", message: "Unknown provider" });
+        return;
+      }
+
+      const model = settings.models?.[provider.id] || provider.defaultModel;
+      if (!model) {
+        port.postMessage({ type: "error", code: "no_model", message: "No model selected" });
+        return;
+      }
+
+      const apiKey = await getApiKey(provider.id);
+      if (provider.needsKey && !apiKey) {
+        port.postMessage({ type: "error", code: "no_key", message: "API key not configured" });
+        return;
+      }
+
+      const baseUrl = resolveBaseUrl(provider, settings);
+      const origin = originPattern(baseUrl);
+      const hasPermission = await chrome.permissions.contains({ origins: [origin] });
+      if (!hasPermission) {
+        port.postMessage({ type: "error", code: "no_permission", message: `Host permission needed for ${origin}` });
+        return;
+      }
+
+      const { system, messages } = buildMessages(msg.request);
+
+      for await (const text of streamCompletion({
+        provider,
+        baseUrl,
+        apiKey,
+        model,
+        system,
+        messages,
+        signal: abortController.signal
+      })) {
+        port.postMessage({ type: "chunk", text });
+      }
+
+      port.postMessage({ type: "done" });
+    } catch (err) {
+      if (err.name === "AbortError") return;
+      port.postMessage({
+        type: "error",
+        code: err.code || "network",
+        message: err.message || "Unknown error"
+      });
     }
   });
+
+  port.onDisconnect.addListener(() => {
+    if (abortController) abortController.abort();
+  });
 });
-
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.type === "GENERATE_EMAIL") {
-    handleGenerate(message.payload).then(sendResponse);
-    return true;
-  }
-});
-
-async function handleGenerate({ prompt, context, provider, model, apiKey }) {
-  try {
-    const response = await callLLM({ prompt, context, provider, model, apiKey });
-    return { ok: true, text: response };
-  } catch (err) {
-    return { ok: false, error: err.message };
-  }
-}
-
-async function callLLM({ prompt, context, provider, model, apiKey }) {
-  const systemPrompt = `You are an email writing assistant inside Gmail. Write professional, clear emails. Reply in the same language as the user's prompt. If context from a previous email is provided, use it to write a relevant reply.`;
-
-  const messages = [];
-  if (context) {
-    messages.push({ role: "user", content: `Previous email thread:\n${context}` });
-    messages.push({ role: "assistant", content: "Understood. I'll use this context." });
-  }
-  messages.push({ role: "user", content: prompt });
-
-  if (provider === "openai") {
-    return callOpenAI({ apiKey, model, systemPrompt, messages });
-  }
-  if (provider === "anthropic") {
-    return callAnthropic({ apiKey, model, systemPrompt, messages });
-  }
-  if (provider === "custom") {
-    return callCustomEndpoint({ apiKey, model, systemPrompt, messages });
-  }
-  throw new Error(`Unknown provider: ${provider}`);
-}
-
-async function callOpenAI({ apiKey, model, systemPrompt, messages }) {
-  const res = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${apiKey}` },
-    body: JSON.stringify({
-      model,
-      messages: [{ role: "system", content: systemPrompt }, ...messages],
-      temperature: 0.7
-    })
-  });
-  if (!res.ok) throw new Error(`OpenAI API error: ${res.status}`);
-  const data = await res.json();
-  return data.choices[0].message.content;
-}
-
-async function callAnthropic({ apiKey, model, systemPrompt, messages }) {
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": apiKey,
-      "anthropic-version": "2023-06-01",
-      "anthropic-dangerous-direct-browser-access": "true"
-    },
-    body: JSON.stringify({
-      model,
-      max_tokens: 4096,
-      system: systemPrompt,
-      messages: messages.map((m) => ({ role: m.role, content: m.content }))
-    })
-  });
-  if (!res.ok) throw new Error(`Anthropic API error: ${res.status}`);
-  const data = await res.json();
-  return data.content[0].text;
-}
-
-async function callCustomEndpoint({ apiKey, model, systemPrompt, messages }) {
-  const { customEndpoint } = await chrome.storage.sync.get("customEndpoint");
-  if (!customEndpoint) throw new Error("Custom endpoint URL not configured");
-  const res = await fetch(customEndpoint, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${apiKey}` },
-    body: JSON.stringify({
-      model,
-      messages: [{ role: "system", content: systemPrompt }, ...messages],
-      temperature: 0.7
-    })
-  });
-  if (!res.ok) throw new Error(`Custom API error: ${res.status}`);
-  const data = await res.json();
-  return data.choices[0].message.content;
-}
