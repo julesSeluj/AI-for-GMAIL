@@ -3,6 +3,10 @@ import { getSettings, getApiKey } from "../lib/storage.js";
 import { buildMessages } from "../lib/prompt.js";
 import { streamCompletion } from "../lib/llm.js";
 
+chrome.runtime.onMessage.addListener((msg) => {
+  if (msg.type === "openOptions") chrome.runtime.openOptionsPage();
+});
+
 chrome.runtime.onConnect.addListener((port) => {
   if (port.name !== "ai4g-generate") return;
 
