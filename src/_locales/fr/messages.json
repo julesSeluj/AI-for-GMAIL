@@ -1,0 +1,75 @@
+{
+  "extName": { "message": "AI for Gmail" },
+  "extDescription": { "message": "Rédigez vos emails avec n'importe quel LLM directement dans Gmail." },
+
+  "btnAI": { "message": "AI Write" },
+  "panelTitle": { "message": "AI for Gmail" },
+
+  "tabCompose": { "message": "Rédiger" },
+  "tabReply": { "message": "Répondre" },
+  "tabImprove": { "message": "Améliorer" },
+
+  "instructionPlaceholder": { "message": "Décrivez l'email à rédiger…" },
+  "instructionReplyPlaceholder": { "message": "Consignes pour la réponse (facultatif)…" },
+
+  "improveFix": { "message": "Corriger grammaire et orthographe" },
+  "improveRephrase": { "message": "Reformuler" },
+  "improveShorter": { "message": "Raccourcir" },
+  "improveLonger": { "message": "Allonger" },
+  "improveTranslate": { "message": "Traduire" },
+
+  "targetLangPlaceholder": { "message": "Langue cible" },
+
+  "toneNeutral": { "message": "Neutre" },
+  "toneFormal": { "message": "Formel" },
+  "toneFriendly": { "message": "Amical" },
+  "toneDirect": { "message": "Direct" },
+
+  "lengthShort": { "message": "Court" },
+  "lengthMedium": { "message": "Moyen" },
+  "lengthLong": { "message": "Long" },
+
+  "btnGenerate": { "message": "Générer" },
+  "btnStop": { "message": "Arrêter" },
+  "btnRegenerate": { "message": "Régénérer" },
+  "btnInsert": { "message": "Insérer" },
+  "btnCopy": { "message": "Copier" },
+  "btnClose": { "message": "Fermer" },
+
+  "errorNoKey": { "message": "Clé API non configurée. Ouvrez les paramètres pour l'ajouter." },
+  "errorNoModel": { "message": "Aucun modèle sélectionné. Ouvrez les paramètres pour en choisir un." },
+  "errorNoPermission": { "message": "Permission d'hôte non accordée. Ouvrez les paramètres pour l'autoriser." },
+  "errorAuth": { "message": "Échec d'authentification. Vérifiez votre clé API." },
+  "errorRateLimit": { "message": "Limite de requêtes atteinte. Patientez et réessayez." },
+  "errorNetwork": { "message": "Erreur réseau. Vérifiez votre connexion." },
+  "errorProvider": { "message": "Erreur du fournisseur : $STATUS$", "placeholders": { "STATUS": { "content": "$1" } } },
+
+  "linkOpenSettings": { "message": "Ouvrir les paramètres" },
+
+  "optTitle": { "message": "AI for Gmail — Paramètres" },
+  "optProvider": { "message": "Fournisseur" },
+  "optModel": { "message": "Modèle" },
+  "optModelPlaceholder": { "message": "Nom du modèle" },
+  "optApiKey": { "message": "Clé API" },
+  "optApiKeyPlaceholder": { "message": "Collez votre clé API" },
+  "optShowKey": { "message": "Afficher" },
+  "optHideKey": { "message": "Masquer" },
+  "optCustomUrl": { "message": "URL du point d'accès" },
+  "optCustomUrlPlaceholder": { "message": "https://votre-serveur/v1" },
+  "optDefaultTone": { "message": "Ton par défaut" },
+  "optDefaultLength": { "message": "Longueur par défaut" },
+  "optSave": { "message": "Enregistrer" },
+  "optSaved": { "message": "Paramètres enregistrés." },
+  "optPermissionDenied": { "message": "Permission d'hôte refusée." },
+  "optTestConnection": { "message": "Tester la connexion" },
+  "optTestSuccess": { "message": "Connexion réussie !" },
+  "optLoadModels": { "message": "Charger les modèles" },
+  "optOllamaHelp": { "message": "Lancez Ollama avec : OLLAMA_ORIGINS=chrome-extension://* ollama serve" },
+
+  "popupProvider": { "message": "Fournisseur" },
+  "popupModel": { "message": "Modèle" },
+  "popupReady": { "message": "Prêt" },
+  "popupNoKey": { "message": "Clé API manquante" },
+  "popupNoPermission": { "message": "Permission requise" },
+  "popupOpenSettings": { "message": "Paramètres" }
+}

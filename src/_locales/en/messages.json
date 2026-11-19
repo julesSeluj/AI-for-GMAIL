@@ -1,0 +1,75 @@
+{
+  "extName": { "message": "AI for Gmail" },
+  "extDescription": { "message": "Write emails with any AI LLM directly inside Gmail." },
+
+  "btnAI": { "message": "AI Write" },
+  "panelTitle": { "message": "AI for Gmail" },
+
+  "tabCompose": { "message": "Compose" },
+  "tabReply": { "message": "Reply" },
+  "tabImprove": { "message": "Improve" },
+
+  "instructionPlaceholder": { "message": "Describe what you want to write…" },
+  "instructionReplyPlaceholder": { "message": "Instructions for the reply (optional)…" },
+
+  "improveFix": { "message": "Fix grammar & spelling" },
+  "improveRephrase": { "message": "Rephrase" },
+  "improveShorter": { "message": "Make shorter" },
+  "improveLonger": { "message": "Make longer" },
+  "improveTranslate": { "message": "Translate" },
+
+  "targetLangPlaceholder": { "message": "Target language" },
+
+  "toneNeutral": { "message": "Neutral" },
+  "toneFormal": { "message": "Formal" },
+  "toneFriendly": { "message": "Friendly" },
+  "toneDirect": { "message": "Direct" },
+
+  "lengthShort": { "message": "Short" },
+  "lengthMedium": { "message": "Medium" },
+  "lengthLong": { "message": "Long" },
+
+  "btnGenerate": { "message": "Generate" },
+  "btnStop": { "message": "Stop" },
+  "btnRegenerate": { "message": "Regenerate" },
+  "btnInsert": { "message": "Insert" },
+  "btnCopy": { "message": "Copy" },
+  "btnClose": { "message": "Close" },
+
+  "errorNoKey": { "message": "API key not configured. Open settings to add it." },
+  "errorNoModel": { "message": "No model selected. Open settings to choose one." },
+  "errorNoPermission": { "message": "Host permission not granted. Open settings to allow it." },
+  "errorAuth": { "message": "Authentication failed. Check your API key." },
+  "errorRateLimit": { "message": "Rate limit exceeded. Please wait and try again." },
+  "errorNetwork": { "message": "Network error. Check your connection." },
+  "errorProvider": { "message": "Provider error: $STATUS$", "placeholders": { "STATUS": { "content": "$1" } } },
+
+  "linkOpenSettings": { "message": "Open settings" },
+
+  "optTitle": { "message": "AI for Gmail — Settings" },
+  "optProvider": { "message": "Provider" },
+  "optModel": { "message": "Model" },
+  "optModelPlaceholder": { "message": "Model name" },
+  "optApiKey": { "message": "API key" },
+  "optApiKeyPlaceholder": { "message": "Paste your API key" },
+  "optShowKey": { "message": "Show" },
+  "optHideKey": { "message": "Hide" },
+  "optCustomUrl": { "message": "Endpoint URL" },
+  "optCustomUrlPlaceholder": { "message": "https://your-server/v1" },
+  "optDefaultTone": { "message": "Default tone" },
+  "optDefaultLength": { "message": "Default length" },
+  "optSave": { "message": "Save" },
+  "optSaved": { "message": "Settings saved." },
+  "optPermissionDenied": { "message": "Host permission denied." },
+  "optTestConnection": { "message": "Test connection" },
+  "optTestSuccess": { "message": "Connection successful!" },
+  "optLoadModels": { "message": "Load models" },
+  "optOllamaHelp": { "message": "Start Ollama with: OLLAMA_ORIGINS=chrome-extension://* ollama serve" },
+
+  "popupProvider": { "message": "Provider" },
+  "popupModel": { "message": "Model" },
+  "popupReady": { "message": "Ready" },
+  "popupNoKey": { "message": "API key missing" },
+  "popupNoPermission": { "message": "Permission needed" },
+  "popupOpenSettings": { "message": "Settings" }
+}
