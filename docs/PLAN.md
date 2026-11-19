@@ -14,7 +14,7 @@ Ce document est la source de vérité. La partie 4 est écrite pour être exécu
 | Fournisseurs v1 | Préréglages : OpenAI, Anthropic, Google Gemini, Mistral, OpenRouter, Ollama (local), plus « Personnalisé » (tout endpoint compatible OpenAI, dont LM Studio). |
 | Fonctions v1 | Rédiger depuis une consigne ; répondre selon le fil ; améliorer le brouillon ; ton, longueur, streaming, régénérer. |
 | Langues de l'interface | Français et anglais, via `chrome.i18n`. Anglais par défaut. |
-| Distribution | Dépôt public, Chrome Web Store. |
+| Distribution | Dépôt public sous licence MIT, Chrome Web Store. |
 
 ## 2. Points d'ombre tranchés
 
@@ -38,7 +38,6 @@ Chaque point a une valeur retenue. L'exécutant applique la valeur retenue sans 
 
 Ces points ne bloquent pas le développement mais bloquent la publication (étape 12).
 
-- **Licence** du dépôt public (MIT proposée).
 - **Nom sur le store.** Les règles de marque de Google tolèrent « X for Gmail » mais interdisent toute apparence d'affiliation et l'usage du logo Gmail. Prévoir un nom de repli.
 - **Compte développeur Chrome Web Store** (frais d'inscription uniques, vérification d'identité).
 - **Icône définitive** : celles de `src/assets/icons/` sont provisoires.
