@@ -1,167 +1,249 @@
-.ai4gmail-btn {
+/* AI for Gmail — all classes prefixed ai4g- */
+
+.ai4g-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
-  margin: 4px;
-  border: none;
-  border-radius: 18px;
-  background: #1a73e8;
-  color: #fff;
-  font-family: "Google Sans", Roboto, sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.ai4gmail-btn:hover {
-  background: #1557b0;
-}
-
-.ai4gmail-btn svg {
-  width: 16px;
-  height: 16px;
-  fill: currentColor;
-}
-
-.ai4gmail-panel {
-  position: absolute;
-  bottom: 100%;
-  left: 0;
-  z-index: 10000;
-  width: 420px;
-  margin-bottom: 8px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
-  font-family: "Google Sans", Roboto, sans-serif;
-  overflow: hidden;
-}
-
-.ai4gmail-panel-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
-  background: #f8f9fa;
-  border-bottom: 1px solid #e0e0e0;
-  font-size: 14px;
-  font-weight: 500;
-  color: #202124;
-}
-
-.ai4gmail-panel-close {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 18px;
-  color: #5f6368;
-  padding: 4px;
-  line-height: 1;
-}
-
-.ai4gmail-panel-body {
-  padding: 16px;
-}
-
-.ai4gmail-textarea {
-  width: 100%;
-  min-height: 80px;
-  padding: 10px 12px;
+  gap: 4px;
+  padding: 4px 10px;
+  margin: 0 4px;
   border: 1px solid #dadce0;
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 13px;
-  resize: vertical;
-  box-sizing: border-box;
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.ai4gmail-textarea:focus {
-  border-color: #1a73e8;
-}
-
-.ai4gmail-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.ai4gmail-generate {
-  padding: 8px 20px;
-  border: none;
-  border-radius: 18px;
-  background: #1a73e8;
-  color: #fff;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.ai4gmail-generate:hover {
-  background: #1557b0;
-}
-
-.ai4gmail-generate:disabled {
-  background: #dadce0;
-  color: #80868b;
-  cursor: not-allowed;
-}
-
-.ai4gmail-insert {
-  padding: 8px 20px;
-  border: 1px solid #dadce0;
-  border-radius: 18px;
+  border-radius: 4px;
   background: #fff;
   color: #1a73e8;
   font-size: 13px;
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  cursor: pointer;
+  vertical-align: middle;
+  line-height: 20px;
+}
+
+.ai4g-btn:hover { background: #f1f3f4; }
+.ai4g-btn:focus-visible { outline: 2px solid #1a73e8; outline-offset: 1px; }
+
+.ai4g-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+/* Panel */
+.ai4g-panel {
+  position: fixed;
+  width: 380px;
+  max-height: 520px;
+  background: #fff;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  font-size: 13px;
+  color: #202124;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 10001;
+}
+
+.ai4g-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid #e8eaed;
+  flex-shrink: 0;
+}
+
+.ai4g-title { font-weight: 500; font-size: 14px; }
+
+.ai4g-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #5f6368;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+.ai4g-close:hover { color: #202124; }
+
+.ai4g-tabs {
+  display: flex;
+  border-bottom: 1px solid #e8eaed;
+  flex-shrink: 0;
+}
+
+.ai4g-tab {
+  flex: 1;
+  padding: 8px 4px;
+  border: none;
+  background: none;
+  font-size: 13px;
+  color: #5f6368;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.ai4g-tab:hover:not(:disabled) { color: #1a73e8; }
+.ai4g-tab-active { color: #1a73e8; border-bottom-color: #1a73e8; font-weight: 500; }
+.ai4g-tab:disabled { opacity: 0.4; cursor: default; }
+.ai4g-tab:focus-visible { outline: 2px solid #1a73e8; outline-offset: -2px; }
+
+.ai4g-body {
+  padding: 12px 14px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.ai4g-instruction {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 60px;
+  color: #202124;
+  background: #fff;
+}
+.ai4g-instruction:focus {
+  outline: none;
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 1px #1a73e8;
+}
+
+.ai4g-improve-options { margin-bottom: 8px; }
+
+.ai4g-improve-mode,
+.ai4g-tone,
+.ai4g-length {
+  padding: 4px 8px;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #202124;
+  background: #fff;
+}
+
+.ai4g-target-lang {
+  margin-top: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.ai4g-controls {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.ai4g-generate {
+  margin-left: auto;
+  padding: 6px 16px;
+  background: #1a73e8;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
 }
+.ai4g-generate:hover { background: #1557b0; }
+.ai4g-generate:focus-visible { outline: 2px solid #1a73e8; outline-offset: 2px; }
 
-.ai4gmail-preview {
-  margin-top: 12px;
-  padding: 10px 12px;
-  background: #f1f3f4;
-  border-radius: 8px;
-  font-size: 13px;
-  color: #202124;
-  line-height: 1.5;
+.ai4g-output {
+  margin-top: 10px;
+  padding: 10px;
+  background: #f8f9fa;
+  border: 1px solid #e8eaed;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
   max-height: 200px;
   overflow-y: auto;
-  white-space: pre-wrap;
-}
-
-.ai4gmail-loading {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #5f6368;
   font-size: 13px;
-  margin-top: 12px;
+  line-height: 1.5;
 }
 
-.ai4gmail-spinner {
-  width: 16px;
-  height: 16px;
-  border: 2px solid #dadce0;
-  border-top-color: #1a73e8;
-  border-radius: 50%;
-  animation: ai4gmail-spin 0.6s linear infinite;
-}
-
-@keyframes ai4gmail-spin {
-  to { transform: rotate(360deg); }
-}
-
-.ai4gmail-error {
-  margin-top: 12px;
-  padding: 8px 12px;
+.ai4g-output.ai4g-error {
+  color: #d93025;
   background: #fce8e6;
-  border-radius: 8px;
-  color: #c5221f;
+  border-color: #d93025;
+}
+
+.ai4g-output a { color: #1a73e8; text-decoration: underline; }
+
+.ai4g-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.ai4g-insert {
+  padding: 6px 16px;
+  background: #1a73e8;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
   font-size: 13px;
+  cursor: pointer;
+}
+.ai4g-insert:hover { background: #1557b0; }
+
+.ai4g-regenerate,
+.ai4g-copy {
+  padding: 6px 12px;
+  background: #fff;
+  color: #1a73e8;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.ai4g-regenerate:hover,
+.ai4g-copy:hover { background: #f1f3f4; }
+
+.ai4g-insert:focus-visible,
+.ai4g-regenerate:focus-visible,
+.ai4g-copy:focus-visible {
+  outline: 2px solid #1a73e8;
+  outline-offset: 1px;
+}
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+  .ai4g-panel { background: #292a2d; border-color: #3c4043; color: #e8eaed; }
+  .ai4g-header { border-bottom-color: #3c4043; }
+  .ai4g-tabs { border-bottom-color: #3c4043; }
+  .ai4g-tab { color: #9aa0a6; }
+  .ai4g-tab:hover:not(:disabled) { color: #8ab4f8; }
+  .ai4g-tab-active { color: #8ab4f8; border-bottom-color: #8ab4f8; }
+  .ai4g-close { color: #9aa0a6; }
+  .ai4g-close:hover { color: #e8eaed; }
+  .ai4g-btn { background: #292a2d; border-color: #3c4043; color: #8ab4f8; }
+  .ai4g-btn:hover { background: #3c4043; }
+  .ai4g-instruction,
+  .ai4g-target-lang { background: #35363a; border-color: #3c4043; color: #e8eaed; }
+  .ai4g-instruction:focus { border-color: #8ab4f8; box-shadow: 0 0 0 1px #8ab4f8; }
+  .ai4g-improve-mode,
+  .ai4g-tone,
+  .ai4g-length { background: #35363a; border-color: #3c4043; color: #e8eaed; }
+  .ai4g-output { background: #35363a; border-color: #3c4043; color: #e8eaed; }
+  .ai4g-output.ai4g-error { background: #3c2020; border-color: #d93025; color: #f28b82; }
+  .ai4g-output a { color: #8ab4f8; }
+  .ai4g-generate { background: #8ab4f8; color: #202124; }
+  .ai4g-generate:hover { background: #aecbfa; }
+  .ai4g-insert { background: #8ab4f8; color: #202124; }
+  .ai4g-insert:hover { background: #aecbfa; }
+  .ai4g-regenerate,
+  .ai4g-copy { background: #35363a; border-color: #3c4043; color: #8ab4f8; }
+  .ai4g-regenerate:hover,
+  .ai4g-copy:hover { background: #3c4043; }
 }
